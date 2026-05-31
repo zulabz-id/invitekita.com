@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Undangan Pernikahan</title>
+  <style>
+    body, html { margin: 0; padding: 0; height: 100vh; overflow: hidden; background-color: #222; }
+    iframe { width: 100%; height: 100%; border: none; }
+  </style>
+</head>
+<body>
+
+  <!-- Iframe yang akan memuat undangan -->
+  <iframe id="gas-iframe" src=""></iframe>
+
+  <script>
+    // 1. Ganti URL ini dengan URL Web App GAS Anda (yang berakhiran /exec)
+    const baseGasUrl = "https://script.google.com/macros/s/AKfycby83w9zW_4XfPdtgPlOVQxzcVa2QOcTWovM4slEfwTXRDHZmOiWk7BZ1gDxoNnPbdAO/exec"; 
+    
+    // 2. Mengambil URL dari address bar saat ini (Berhasil karena bukan di dalam Google Sites)
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramId = urlParams.get('id');
+    const paramTamu = urlParams.get('tamu');
+
+    // 3. Menyusun URL baru untuk iframe
+    let finalUrl = baseGasUrl;
+    let hasQuery = false;
+
+    if (paramId) {
+      finalUrl += "?id=" + encodeURIComponent(paramId);
+      hasQuery = true;
+    }
+    
+    if (paramTamu) {
+      finalUrl += (hasQuery ? "&" : "?") + "tamu=" + encodeURIComponent(paramTamu);
+    }
+
+    // 4. Memasukkan URL yang sudah berisi parameter ke dalam iframe
+    document.getElementById("gas-iframe").src = finalUrl;
+  </script>
+
+</body>
+</html>
